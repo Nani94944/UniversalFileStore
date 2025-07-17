@@ -1,0 +1,6 @@
+@UniversalFileStore_HostAddress = http://localhost:5258
+
+GET {{UniversalFileStore_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
