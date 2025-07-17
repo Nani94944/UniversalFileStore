@@ -4,7 +4,8 @@ Prerequisites
 
 .NET 8 SDK
 Visual Studio (for IIS Express)
-Google Drive API credentials.json (provided below)
+Google Drive API credentials.json
+Dropbox API access token (optional)
 curl or Postman for testing
 
 Setup
@@ -29,7 +30,7 @@ Ensure it contains:{
     "ApplicationName": "UniversalFileStore"
   },
   "Dropbox": {
-    "AccessToken": "your_dropbox_access_token"
+    "AccessToken": "<your-dropbox-access-token>"
   }
 }
 
@@ -37,7 +38,7 @@ Ensure it contains:{
 
 
 Run with IIS Express:
-Open in Visual Studio, select IIS Express, and press F5.
+In Visual Studio, select IIS Express and press F5.
 Or use:dotnet run --launch-profile "IIS Express"
 
 
@@ -64,7 +65,7 @@ Authorized JavaScript origins: Empty
 
 API Endpoints
 
-Upload File:curl -k -F file=@<path-to-file> https://localhost:44323/upload?provider=gdrive
+Upload File:curl -k -F file=@<path-to-file> https://localhost:44323/upload?provider=<gdrive|dropbox>
 
 Example Response:{
   "provider": "gdrive",
@@ -74,7 +75,7 @@ Example Response:{
 }
 
 
-Download File:curl -k https://localhost:44323/download?id=<file-id>&provider=gdrive -o <output-file>
+Download File:curl -k https://localhost:44323/download?id=<file-id>&provider=<gdrive|dropbox> -o <output-file>
 
 
 
@@ -82,20 +83,20 @@ Testing with Postman
 
 Upload:
 Method: POST
-URL: https://localhost:44323/upload?provider=gdrive
+URL: https://localhost:44323/upload?provider=<gdrive|dropbox>
 Body: Form-data, key=file, value=select a file (e.g., logo.png)
 Disable SSL verification in Postman settings.
 
 
 Download:
 Method: GET
-URL: https://localhost:44323/download?id=<file-id>&provider=gdrive
+URL: https://localhost:44323/download?id=<file-id>&provider=<gdrive|dropbox>
 Save response as a file.
 
 
 
 Notes
 
-Ensure credentials.json is in the project root and set to "Copy to Output Directory: Always" in .csproj.
-Use /upload, not /filestore/upload, for the endpoint.
-For Dropbox, add a valid access token to appsettings.json.
+Ensure credentials.json is set to "Copy to Output Directory: Always" in .csproj.
+For Dropbox, provide a valid access token in appsettings.json.
+Use /upload and /download endpoints, not /filestore/*.
